@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import SignIn from "./component/signIn";
 
-function App() {
+const App = () => {
+  const loginUser = {
+    email: "seolhee@gmail.com",
+    password: "seolhee",
+  };
+
+  const [email, setEmail] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+
+  const Login = (forms) => {
+    console.log(forms);
+
+    if (
+      forms.email == loginUser.email &&
+      forms.password == loginUser.password
+    ) {
+      console.log("Success");
+      setEmail({
+        email: forms.email,
+        password: forms.password,
+      });
+    } else {
+      console.log("your password is incorret");
+      setError("your password is incorret");
+    }
+  };
+
+  const Logout = () => {
+    setEmail({ email: "", password: "" });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {email.password != "" ? (
+        <div className="hi">
+          <h1>
+            Hi, <span>{email.email}</span>
+          </h1>
+          <button onClick={Logout}>Logout</button>
+        </div>
+      ) : (
+        <SignIn Login={Login} error={error} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
